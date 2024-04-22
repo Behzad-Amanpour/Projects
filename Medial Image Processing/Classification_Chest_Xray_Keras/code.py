@@ -113,7 +113,11 @@ from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 my_callback = [EarlyStopping(monitor='val_loss', patience = 10),
                ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=0.00001)]
 
-##Data Augmentation (https://keras.io/2.15/api/layers/preprocessing_layers/image_augmentation/)
+##Data Augmentation
+"""
+(https://keras.io/2.15/api/layers/preprocessing_layers/image_augmentation/)
+Note that you can apply augmentation layers as preprocessing layers of the network. By default, augmentation layers are only applied during training.
+"""
 from keras import layers
 Rot_layer = layers.RandomRotation(factor=0.05, fill_mode="constant")
                                   # factor: a float represented as fraction of 2 Pi,    0.05 ≃ 20 degrees
