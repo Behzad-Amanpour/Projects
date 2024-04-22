@@ -96,9 +96,32 @@ def Load_Data(path, IMG_SIZE): # IMG_SIZE = 224  # based on our networks example
 
 ## Train
 train_images, train_labels = Load_Data(
-                                      path = '/content/drive/MyDrive/Projects/0_Webinars/5_Urmia/Data_sample/Train',
-                                      IMG_SIZE = 224) # 224 is based on our network input size and its examples on Keras
-## Validation
+                                      path = '/content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/Train',
+                                      IMG_SIZE = 224)  #224 is based on our network input size and its examples on Keras
+## Validation (if you have a separate validation data)
 train_images, train_labels = Load_Data(
-                                      path = '/content/drive/MyDrive/Projects/0_Webinars/5_Urmia/Data_sample/Train',
+                                      path = /content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/Validation,
                                       IMG_SIZE = 224)
+## Test
+test_images, test_labels = Load_Data(
+                                      path = /content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/Validation,
+                                      IMG_SIZE = 224)
+
+# Model, Training, Test
+##Callbacks (https://keras.io/api/callbacks/)
+from keras.callbacks import EarlyStopping, ReduceLROnPlateau
+my_callback = [EarlyStopping(monitor='val_loss', patience = 10),
+               ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=0.00001)]
+
+##Data Augmentation (https://keras.io/2.15/api/layers/preprocessing_layers/image_augmentation/)
+from keras import layers
+Rot_layer = layers.RandomRotation(factor=0.05, fill_mode="constant")
+                                  # factor: a float represented as fraction of 2 Pi,    0.05 ≃ 20 degrees
+                                  # fill_mode="constant": filling all values beyond the edge with k = 0.
+Flip_layer = layers.RandomFlip(mode="horizontal")
+Contrast_layer = layers.RandomContrast(factor=0.2)
+                                  # The contrast_factor will be randomly picked between [1.0 - factor, 1.0 + factor]
+                                  # For any pixel x in the channel, the output will be ((x - mean) * contrast_factor + mean) where mean is the mean value of the channel.
+train_images_aug = np.concatenate((train_images, Rot_layer(train_images), Contrast_layer(train_images)), axis=0)
+train_labels_aug = np.concatenate((train_labels, train_labels, train_labels), axis=0)
+
