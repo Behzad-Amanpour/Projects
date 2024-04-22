@@ -97,6 +97,8 @@ def Load_Data(path, IMG_SIZE): # IMG_SIZE = 224  # based on our networks example
 ## Train
 train_images, train_labels = Load_Data(
                                       path = '/content/drive/MyDrive/Projects/0_Webinars/5_Urmia/Data_sample/Train',
-                                      IMG_SIZE = 224)
+                                      IMG_SIZE = 224) # 224 is based on our network input size and its examples on Keras
 ## Validation
-
+train_images, train_labels = Load_Data(
+                                      path = '/content/drive/MyDrive/Projects/0_Webinars/5_Urmia/Data_sample/Train',
+                                      IMG_SIZE = 224)
