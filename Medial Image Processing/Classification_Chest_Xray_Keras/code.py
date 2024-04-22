@@ -45,7 +45,7 @@ def plot_hist(hist):
   plt.legend(["train", "validation"], loc="upper left")
   plt.show()
 
-# Data Loading
+# DATA LOADING ================================================================================
 from keras.utils import load_img, img_to_array
 from tensorflow import one_hot
 from os import listdir
@@ -94,20 +94,21 @@ def Load_Data(path, IMG_SIZE): # IMG_SIZE = 224  # based on our networks example
 
   return images, labels
 
-## Train
+## Train Data
 train_images, train_labels = Load_Data(
                                       path = '/content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/Train',
                                       IMG_SIZE = 224)  #224 is based on our network input size and its examples on Keras
-## Validation (if you have a separate validation data)
+## Validation Data (if you have a separate validation data)
 train_images, train_labels = Load_Data(
                                       path = /content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/Validation,
                                       IMG_SIZE = 224)
-## Test
+## Test Data
 test_images, test_labels = Load_Data(
                                       path = /content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/Validation,
                                       IMG_SIZE = 224)
 
-# Model, Training, Test
+
+# MODEL, TRAINING, TEST =======================================================================
 ##Callbacks (https://keras.io/api/callbacks/)
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 my_callback = [EarlyStopping(monitor='val_loss', patience = 10),
@@ -128,4 +129,8 @@ Contrast_layer = layers.RandomContrast(factor=0.2)
                                   # For any pixel x in the channel, the output will be ((x - mean) * contrast_factor + mean) where mean is the mean value of the channel.
 train_images_aug = np.concatenate((train_images, Rot_layer(train_images), Contrast_layer(train_images)), axis=0)
 train_labels_aug = np.concatenate((train_labels, train_labels, train_labels), axis=0)
+
+
+
+
 
