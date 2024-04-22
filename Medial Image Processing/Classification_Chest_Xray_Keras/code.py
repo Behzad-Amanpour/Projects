@@ -107,13 +107,6 @@ test_images, test_labels = Load_Data(
                                       path = /content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/Validation,
                                       IMG_SIZE = 224)
 
-
-# MODEL, TRAINING, TEST =======================================================================
-##Callbacks (https://keras.io/api/callbacks/)
-from keras.callbacks import EarlyStopping, ReduceLROnPlateau
-my_callback = [EarlyStopping(monitor='val_loss', patience = 10),
-               ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=0.00001)]
-
 ##Data Augmentation
 """
 (https://keras.io/2.15/api/layers/preprocessing_layers/image_augmentation/)
@@ -129,6 +122,75 @@ Contrast_layer = layers.RandomContrast(factor=0.2)
                                   # For any pixel x in the channel, the output will be ((x - mean) * contrast_factor + mean) where mean is the mean value of the channel.
 train_images_aug = np.concatenate((train_images, Rot_layer(train_images), Contrast_layer(train_images)), axis=0)
 train_labels_aug = np.concatenate((train_labels, train_labels, train_labels), axis=0)
+
+
+##Callbacks (https://keras.io/api/callbacks/)
+from keras.callbacks import EarlyStopping, ReduceLROnPlateau
+my_callback = [EarlyStopping(monitor='val_loss', patience = 10),
+               ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=0.00001)]
+
+
+
+# MODEL, TRAINING  ==========================================================================
+##EfficientNet  (https://keras.io/examples/vision/image_classification_efficientnet_fine_tuning/)
+"""
+- For EfficientNet, input preprocessing is included as part of the model
+- EfficientNet models expect their inputs to be float tensors of pixels with values in the [0-255] range.
+- https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/preprocess_input
+"""
+print(  'train images min max: ', train_images.min(), train_images.max(),
+      '\nvalid images min max: ', valid_images.min(), valid_images.max(),
+      '\ntrain images min max: ', test_images.min(), test_images.max() )
+
+from keras.applications import EfficientNetB0
+from keras import layers
+from keras.models import Model
+from keras.optimizers import Adam
+Num_Classes = 2
+IMG_SIZE = 224
+
+# Pre-trained model
+inputs = layers.Input(shape=(IMG_SIZE, IMG_SIZE, 3))
+base_model = EfficientNetB0( weights='imagenet', input_tensor=inputs, include_top=False )
+
+# Freeze the pretrained weights
+base_model.trainable = False
+
+# Rebuild top
+x = layers.GlobalAveragePooling2D()(base_model.output) # GlobalAveragePooling2D: Average of feature maps
+x = layers.BatchNormalization()(x)
+x = layers.Dropout( rate = 0.2 )(x)
+                          # sets input units to 0 with a frequency of rate at each step
+                          # Inputs not set to 0 are scaled up by 1 / (1 - rate) such that the sum over all inputs is unchanged.
+outputs = layers.Dense(Num_Classes, activation="softmax")(x)
+
+model = Model(inputs = base_model.input, outputs = outputs)  # model.summary()
+
+# Compile
+optimizer = Adam(learning_rate=1e-2)
+model.compile(
+    optimizer=optimizer, loss="categorical_crossentropy", metrics=["accuracy"]
+)
+
+# train the model
+epochs = 50
+batch_size = 4
+
+hist = model.fit(
+                 x = train_images,  # train_images_aug,
+                 y = train_labels,  # train_labels_aug,
+                 batch_size = batch_size,
+                 epochs = epochs,
+                 # callbacks= my_callback,
+                 #  validation_split=0.2,  # use this if you don't have validation data 
+                 validation_data=(valid_images, valid_labels),
+                 shuffle=True,
+                 )
+model.save('/content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/saved_Models/EfficientNet.keras')
+
+
+
+
 
 
 
