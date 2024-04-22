@@ -51,48 +51,52 @@ from tensorflow import one_hot
 from os import listdir
 from os.path import join
 
+def Load_Data(path, IMG_SIZE): # IMG_SIZE = 224  # based on our networks examples, original images have different sizes
+  Num_Classes = 2  # for one-hot
+  folders = listdir(path)
+  images = []
+  labels= []
+  ix_PNEUMONIA = 0; ix_NORMAL=0
+
+  for folder in folders:  # folder = 'NORMAL'
+    path2 = join( path, folder )
+    files = listdir( path2 )
+
+    for file in files: # file = 'Copy of IM-0115-0001.jpeg'
+      path3 = join(path2, file )
+      img = load_img(
+          path3,
+          color_mode = "rgb",
+          target_size = (IMG_SIZE, IMG_SIZE), # None
+          interpolation= "bilinear",
+          keep_aspect_ratio=False,  # True: The image is cropped in the center with target aspect ratio before resizing.
+          )
+      img = img_to_array( img ) # Converts a PIL Image instance to a NumPy array
+      # img = np.uint8(img) # if you have a huge dataset, or your network input should be uint
+      images.append( img )
+
+      if folder == 'NORMAL':
+        labels.append( 0 )
+        ix_NORMAL+=1
+      elif folder == 'PNEUMONIA':
+        labels.append( 1 )
+        ix_PNEUMONIA+=1
+      else:
+        raise ValueError('Check the folder name')
+  images = np.array( images )
+  labels = np.array( labels )
+  # print( DataFrame(labels, columns=['Label']).to_string() )
+  labels = one_hot(labels, Num_Classes)
+  # print(DataFrame(labels).to_string())
+  plt.imshow( np.uint8(img) )
+  print('Normal Images: ', ix_NORMAL)
+  print('PNEUMONIA Images: ', ix_PNEUMONIA)
+
+  return images, labels
+
 ## Train
-path ='/content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/Data/Train'
-Num_Classes = 2  # for one-hot
-folders = listdir(path)
-train_images = []
-train_labels= []
-IMG_SIZE = 224  # based on our networks examples, original images have different sizes
-ix_PNEUMONIA = 0; ix_NORMAL=0
-
-for folder in folders:  # folder = 'NORMAL'
-  path2 = join( path, folder )
-  files = listdir( path2 )
-  for file in files: # file = 'Copy of IM-0115-0001.jpeg'
-    path3 = join(path2, file )
-    img = load_img(
-        path3,
-        color_mode = "rgb",
-        target_size = (IMG_SIZE, IMG_SIZE), # None
-        interpolation= "bilinear",
-        keep_aspect_ratio=False,  # True: The image is cropped in the center with target aspect ratio before resizing.
-        )
-    img = img_to_array( img ) # Converts a PIL Image instance to a NumPy array
-    # img = np.uint8(img)     # if you have a huge dataset, or your network input should be uint
-    train_images.append( img )
-    if folder == 'NORMAL':
-      train_labels.append( 0 )
-      ix_NORMAL+=1
-    elif folder == 'PNEUMONIA':
-      train_labels.append( 1 )
-      ix_PNEUMONIA+=1
-    else:
-      raise ValueError('Check the folder name')
-
-train_images = np.array( train_images )
-train_labels = np.array( train_labels )
-print( DataFrame(train_labels, columns=['Label']).to_string() )
-train_labels = one_hot(train_labels, Num_Classes)
-print(DataFrame(train_labels).to_string())
-
-plt.imshow( np.uint8(img) )
-print('Normal Images: ', ix_NORMAL)
-print('PNEUMONIA Images: ', ix_PNEUMONIA)
-
-
+train_images, train_labels = Load_Data(
+                                      path = '/content/drive/MyDrive/Projects/0_Webinars/5_Urmia/Data_sample/Train',
+                                      IMG_SIZE = 224)
 ## Validation
+
