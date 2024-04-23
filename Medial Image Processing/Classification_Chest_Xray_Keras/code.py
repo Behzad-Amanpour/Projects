@@ -239,7 +239,32 @@ hist2 = model2.fit(
 model2.save('/content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/saved_Models/InceptionV3.keras')
 
 
+# TRAINING & VALIDATION CURVES ================================================================
+plot_hist(hist)
+plot_hist(hist2)
 
+# TEST ========================================================================================
+import numpy as np
+from keras.models import load_model
+from sklearn.metrics import confusion_matrix, classification_report
 
+model = load_model('/content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/saved_Models/EfficientNet.keras',
+                    compile=False) 
+model.trainable = False
 
+model2 = load_model('/content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/saved_Models/InceptionV3.keras',
+                    compile=False) 
+model2.trainable = False
 
+predictions = model.predict(test_images)  
+predictions2 = model2.predict(test_images) 
+
+# Convert one-hot encoded labels to class labels (0 or 1)
+predicted_labels = np.argmax(predictions, axis=1)
+predicted_labels2 = np.argmax(predictions2, axis=1)
+true_labels = np.argmax(test_labels, axis=1)
+
+# print(DataFrame(predictions).to_string())
+# print(DataFrame(predicted_labels).to_string())
+print("\nEfficientNet Classification Report:\n", classification_report(true_labels, predicted_labels))
+print("\nInceptionV3 Classification Report:\n", classification_report(true_labels, predicted_labels2))
