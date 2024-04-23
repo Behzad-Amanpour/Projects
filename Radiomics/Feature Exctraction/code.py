@@ -43,10 +43,35 @@ print( unique(mask2) )  # the number of mask unique values should be equal to th
 !pip install SimpleITK
 from radiomics.featureextractor import RadiomicsFeatureExtractor
 from SimpleITK import GetImageFromArray
+from os import listdir
+from os.path import join
 from cv2 import cvtColor, imread, COLOR_BGR2GRAY
+from numpy import array  # zeros, vstack
 from pandas import DataFrame
-from numpy import unique
 
+path_image = '/content/drive/MyDrive/Projects/Radiomics/Data/Images'
+path_mask = '/content/drive/MyDrive/Projects/Radiomics/Data/Masks'
+
+extractor = RadiomicsFeatureExtractor()
+extractor.enableFeatureClassByName('shape2D')
+
+X = []  # X = zeros((1, 102))
+files = listdir( path_image )
+
+for file in files:    # file = files[0]
+    path2 = join(path_image, file)
+    image = cvtColor( imread( path2 ), COLOR_BGR2GRAY)
+    path2 = join( path_mask, file[:-4]+'_mask.jpg')
+    mask = cvtColor( imread( path2 ), COLOR_BGR2GRAY)
+    mask[mask<=100] = 0; mask[mask>100] = 1   # unique values of the mask is more than the number of classes
+    f = extractor.execute( GetImageFromArray(image), GetImageFromArray(mask))
+    f = DataFrame(f.items()).drop(DataFrame(f.items()).index[0:22])
+    X.append(f.values[:,1])  # X = vstack((X, f.values[:,1]))
+
+X = array(X)     # X = X[ 1:, : ]
+Data = DataFrame(data = X, index = files, columns = f.values[:,0])
+name = '/content/drive/MyDrive/Projects/Radiomics/Brain Tumor2.xlsx'
+Data.to_excel( name )
 
 
 
