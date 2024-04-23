@@ -194,6 +194,7 @@ model.save('/content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/save
 - https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/preprocess_input
 - Input: floating point numpy.array or a backend-native tensor, 3D or 4D with 3 color channels, with values in the range [0, 255].
 - The preprocessed data are written over the input data if the data types are compatible. To avoid this behaviour, numpy.copy(x) can be used.
+                                                                                          train_images2 = preprocess_input( np.copy(train_images) )
 """
 
 from keras.applications.inception_v3 import InceptionV3, preprocess_input
@@ -202,8 +203,10 @@ from keras.layers import Dense, GlobalAveragePooling2D
 Num_Classes = 2
 
 # Data Pre-processing (values are scaled between -1 and 1, type float 32)
-train_images2 = preprocess_input( np.copy(train_images) ) # The preprocessed data are written over the input data if the data types are compatible. To avoid this behaviour, numpy.copy(x) can be used.
-valid_images2 = preprocess_input( np.copy(valid_images) )
+train_images = preprocess_input(train_images)
+# train_images2 = preprocess_input( np.copy(train_images) )
+valid_images = preprocess_input(valid_images)
+# valid_images2 = preprocess_input( np.copy(valid_images) )
 
 # Pre-trained model
 base_model = InceptionV3(weights='imagenet', include_top=False)
