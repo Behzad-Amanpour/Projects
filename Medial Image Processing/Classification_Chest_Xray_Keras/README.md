@@ -123,23 +123,24 @@ def Load_Data(path, IMG_SIZE):  # IMG_SIZE = 224  # Based on our networks exampl
   return images, labels
 ```
 #### Train Data
-``
+```
 train_images, train_labels = Load_Data(
                                       path, IMG_SIZE = 224)  #224 is based on our network input size and its examples on Keras
-``                                      
+```                                      
 > The output will be a sample of your train dataset:
-(https://github.com/user-attachments/assets/96ab8b46-3ed5-4d85-bfae-ef33eed50069)
+
+(https://storage.googleapis.com/kagglesdsdata/datasets/17810/23812/chest_xray/train/PNEUMONIA/person1004_bacteria_2935.jpeg)
 
 #### Validation Data
-If you have a separate validation data use this. But if not, you can use **`train_test_split`** for making validation dataset.
-``
+*If you have a separate validation data use this. But if not, you can use **`train_test_split`** for making validation dataset.*
+```
 train_images, train_labels = Load_Data(
                                       path, IMG_SIZE = 224)
-``                                     
+```                                     
 #### Test Data
-``
+```
 test_images, test_labels = Load_Data(
                                       path, IMG_SIZE = 224)
-``                                  
+```                                 
 
 
