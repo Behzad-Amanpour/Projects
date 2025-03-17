@@ -18,6 +18,8 @@ The dataset is organized into 3 folders (train, test, val) and contains subfolde
 Note: Delete the "**.DS_Store**" after unzipping.
 
 
- # Mounting Drive on your Google Colab
-- from google.colab import drive
-
+ # 1. Mounting Drive on your Google Colab
+ ```
+from google.colab import drive
+drive.mount('/content/drive')
+```
