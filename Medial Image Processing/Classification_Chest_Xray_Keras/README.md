@@ -68,6 +68,7 @@ def plot_hist(hist):
   plt.legend(["train", "validation"], loc="upper left")
   plt.show()
 ```
-
+## DATA LOADING
+We used 
 
 
