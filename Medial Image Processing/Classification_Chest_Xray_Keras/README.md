@@ -10,7 +10,7 @@
 
 ### For Downloding the Dataset From Kaggle
 
-From the `Datasetes` download `Chest X-Ray Images (Pneumonia)` dataset.
+From the `Datasetes`, download `Chest X-Ray Images (Pneumonia)` dataset.
 
 ### Content of Images
 
