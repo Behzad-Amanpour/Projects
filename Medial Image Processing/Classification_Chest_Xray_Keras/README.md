@@ -23,7 +23,7 @@ Note: Delete the "**.DS_Store**" after unzipping.
 from google.colab import drive
 drive.mount('/content/drive')
 ```
-## Required Libraries
+## Required Libraries:
 ```
 import numpy as np
 from pandas import DataFrame
