@@ -15,7 +15,7 @@ From the `Datasetes`, download `Chest X-Ray Images (Pneumonia)` dataset.
 ### Content of Images
 
 The dataset is organized into 3 folders (train, test, val) and contains subfolders for each image category (Pneumonia/Normal). There are 5,863 X-Ray images (JPEG) and 2 categories (Pneumonia/Normal).
-Note: Delete the "**.DS_Store**" after unzipping.
+* **Note**: Delete the "**.DS_Store**" after unzipping.*
 
 
  ## Mounting Drive on your Google Colab
@@ -69,6 +69,77 @@ def plot_hist(hist):
   plt.show()
 ```
 ## DATA LOADING
-We used 
+**We changed this code of Keras for loadind JPEG format of data.**
+
+### Required Libraries
+from keras.utils import load_img, img_to_array
+from tensorflow import one_hot
+from os import listdir
+from os.path import join
+
+### Define Function
+```
+def Load_Data(path, IMG_SIZE):  # IMG_SIZE = 224  # Based on our networks examples, original images have different sizes.
+  Num_Classes = 2  # for one-hot
+  folders = listdir(path)
+  images = []
+  labels= []
+  ix_PNEUMONIA = 0; ix_NORMAL=0
+
+  for folder in folders:  # folder = 'NORMAL'
+    path2 = join( path, folder )
+    files = listdir( path2 )
+
+    for file in files: # file = 'Copy of IM-0115-0001.jpeg'
+      path3 = join(path2, file )
+      img = load_img(
+          path3,
+          color_mode = "rgb",
+          target_size = (IMG_SIZE, IMG_SIZE), # None
+          interpolation= "bilinear",
+          keep_aspect_ratio=False,  # True: The image is cropped in the center with target aspect ratio before resizing.
+          )
+      img = img_to_array( img )     # Converts a PIL Image instance to a NumPy array
+      # img = np.uint8(img)         # if you have a huge dataset, or your network input should be uint
+      images.append( img )
+
+      if folder == 'NORMAL':
+        labels.append( 0 )
+        ix_NORMAL+=1
+      elif folder == 'PNEUMONIA':
+        labels.append( 1 )
+        ix_PNEUMONIA+=1
+      else:
+        raise ValueError('Check the folder name')
+  images = np.array( images )
+  labels = np.array( labels )
+  # print( DataFrame(labels, columns=['Label']).to_string() )
+  labels = one_hot(labels, Num_Classes)
+  # print(DataFrame(labels).to_string())
+  plt.imshow( np.uint8(img) )
+  print('Normal Images: ', ix_NORMAL)
+  print('PNEUMONIA Images: ', ix_PNEUMONIA)
+
+  return images, labels
+```
+#### Train Data
+``
+train_images, train_labels = Load_Data(
+                                      path, IMG_SIZE = 224)  #224 is based on our network input size and its examples on Keras
+``                                      
+> The output will be a sample of your train dataset:
+(https://github.com/user-attachments/assets/96ab8b46-3ed5-4d85-bfae-ef33eed50069)
+
+#### Validation Data
+If you have a separate validation data use this. But if not, you can use **`train_test_split`** for making validation dataset.
+``
+train_images, train_labels = Load_Data(
+                                      path, IMG_SIZE = 224)
+``                                     
+#### Test Data
+``
+test_images, test_labels = Load_Data(
+                                      path, IMG_SIZE = 224)
+``                                  
 
 
