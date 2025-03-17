@@ -1,12 +1,11 @@
-# Classification_Chest_Xray_Keras
+# **Classification_Chest_Xray_Keras**
 ![photo](https://i.imgur.com/jZqpV51.png)
 
-This is a project for diagnosis of pneumonia using chest X-ray images.
+*This is a project for diagnosis of pneumonia using chest X-ray images.*
 
 
-> [Kaggle Source] (https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)
-
-> [Data] (https://data.mendeley.com/datasets/rscbjbr9sj/2)
+> ![Kaggle Source] (https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia) 
+> ![Data] (https://data.mendeley.com/datasets/rscbjbr9sj/2)
 
 
 ### For Downloding the Dataset From Kaggle
