@@ -124,8 +124,7 @@ def Load_Data(path, IMG_SIZE):  # IMG_SIZE = 224  # Based on our networks exampl
 ```
 #### Train Data
 ```
-train_images, train_labels = Load_Data(
-                                      path, IMG_SIZE = 224)  #224 is based on our network input size and its examples on Keras.
+train_images, train_labels = Load_Data(path, IMG_SIZE = 224)  #224 is based on our network input size and its examples on Keras.
 ```                                      
 > The output will be a sample of your train dataset:
 
@@ -134,21 +133,19 @@ train_images, train_labels = Load_Data(
 #### Validation Data
 *If you have a separate validation data use this. But if not, you can use **`train_test_split`** for making validation dataset.*
 ```
-train_images, train_labels = Load_Data(
-                                      path, IMG_SIZE = 224)
+train_images, train_labels = Load_Data(path, IMG_SIZE = 224)
 ```                                     
 #### Test Data
 ```
-test_images, test_labels = Load_Data(
-                                      path, IMG_SIZE = 224)
+test_images, test_labels = Load_Data(path, IMG_SIZE = 224)
 ```                                 
 
 ## Data Augmentation
 **Note**: You can apply augmentation layers as preprocessing layers of the network. By default, augmentation layers are only applied during training.
 In Keras 3 the number of Augmentation Layers has been expanded. 
 For this project, we used three Augmentation layers 
-> [Keras 2 API] (https://keras.io/2.15/api/layers/preprocessing_layers/image_augmentation)
-> [Keras 3 API] (https://keras.io/api/layers/preprocessing_layers/image_augmentation)
+> Keras 2 API (https://keras.io/2.15/api/layers/preprocessing_layers/image_augmentation)
+> Keras 3 API (https://keras.io/api/layers/preprocessing_layers/image_augmentation)
 ```
 from keras import layers
 ```
