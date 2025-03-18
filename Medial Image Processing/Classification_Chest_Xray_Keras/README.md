@@ -204,6 +204,7 @@ from keras.optimizers import Adam
 ```
 Num_Classes = 2  #  We have two classes.
 IMG_SIZE = 224   # 224 is based on our network (EfficientNetB0) input size.
+
 # Pre-trained model
 inputs = layers.Input(shape=(IMG_SIZE, IMG_SIZE, 3))
 base_model = EfficientNetB0( weights='imagenet', input_tensor=inputs, include_top=False )
