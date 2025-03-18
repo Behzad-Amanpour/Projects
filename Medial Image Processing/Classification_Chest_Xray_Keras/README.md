@@ -201,4 +201,36 @@ from keras import layers
 from keras.models import Model
 from keras.optimizers import Adam
 ```
+```
+Num_Classes = 2  #  We have two classes.
+IMG_SIZE = 224   # 224 is based on our network (EfficientNetB0) input size.
+# Pre-trained model
+inputs = layers.Input(shape=(IMG_SIZE, IMG_SIZE, 3))
+base_model = EfficientNetB0( weights='imagenet', input_tensor=inputs, include_top=False )
+                             # This model takes input images of shape (224, 224, 3), and the input data should be in the range [0, 255].
+                             # Normalization is included as part of the model.
+                             # Include_top is set to False, as we want to rebuild the top layaers of the network.
+
+# Freeze the pretrained weights
+base_model.trainable = False
+
+# Rebuild top
+x = layers.GlobalAveragePooling2D()(base_model.output) # GlobalAveragePooling2D: Average of feature maps
+x = layers.BatchNormalization()(x)
+x = layers.Dropout( rate = 0.2 )(x)
+                          # sets input units to 0 with a frequency of rate at each step
+                          # Inputs not set to 0 are scaled up by 1 / (1 - rate) such that the sum over all inputs is unchanged.
+outputs = layers.Dense(Num_Classes, activation="softmax")(x)
+
+model = Model(inputs = base_model.input, outputs = outputs)
+# model.summary()
+
+# Compile Model
+optimizer = Adam(learning_rate=1e-2)
+model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=["accuracy"])
+```
+
+
+
+
 
