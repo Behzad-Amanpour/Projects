@@ -165,5 +165,6 @@ train_labels_aug = np.concatenate((train_labels, train_labels, train_labels), ax
 ```
 ## Callbacks 
 - Available callbacks in Keras (https://keras.io/api/callbacks)
+
 A callback is a set of functions to be applied at given stages of the training procedure. You can use callbacks to get a view on internal states and statistics of the model during training.
 
