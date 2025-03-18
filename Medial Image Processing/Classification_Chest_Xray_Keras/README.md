@@ -163,3 +163,7 @@ Contrast_layer = layers.RandomContrast(factor=0.2)
 train_images_aug = np.concatenate((train_images, Rot_layer(train_images), Contrast_layer(train_images)), axis=0)
 train_labels_aug = np.concatenate((train_labels, train_labels, train_labels), axis=0)
 ```
+## Callbacks 
+- Available callbacks in Keras (https://keras.io/api/callbacks)
+A callback is a set of functions to be applied at given stages of the training procedure. You can use callbacks to get a view on internal states and statistics of the model during training.
+
