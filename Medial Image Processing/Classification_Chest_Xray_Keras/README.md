@@ -178,8 +178,13 @@ my_callback = [EarlyStopping(monitor='val_loss', patience = 10),
 ```
 ## Train Model
 > We used Keras Model **`EfficientNetB0`** with weights pre-trained on imagenet.
+
 > EfficientNet provides a family of models (B0 to B7) that represents a good combination of efficiency and accuracy on a variety of scales.
+
 > ![EfficientNet] (https://keras.io/examples/vision/image_classification_efficientnet_fine_tuning)
+
 > !Each Keras model expects a specific kind of input preprocessing (https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/preprocess_input)
+
 > For EfficientNet, input preprocessing is included as part of the model
+
 > EfficientNet models expect their inputs to be float tensors of pixels with values in the [0-255] range.
