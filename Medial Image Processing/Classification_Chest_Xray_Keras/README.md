@@ -167,4 +167,19 @@ train_labels_aug = np.concatenate((train_labels, train_labels, train_labels), ax
 - Available callbacks in Keras (https://keras.io/api/callbacks)
 
 A callback is a set of functions to be applied at given stages of the training procedure. You can use callbacks to get a view on internal states and statistics of the model during training.
-
+You can pass a list of callbacks to the .fit() method of your model.
+We used two Callbacks 
+```
+from keras.callbacks import EarlyStopping, ReduceLROnPlateau
+```
+```
+my_callback = [EarlyStopping(monitor='val_loss', patience = 10),
+               ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=0.00001)]
+```
+## Train Model
+> We used Keras Model **`EfficientNetB0`** with weights pre-trained on imagenet.
+> EfficientNet provides a family of models (B0 to B7) that represents a good combination of efficiency and accuracy on a variety of scales. 
+- [EfficientNet] (https://keras.io/examples/vision/image_classification_efficientnet_fine_tuning)
+!Each Keras model expects a specific kind of input preprocessing (https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/preprocess_input)
+For EfficientNet, input preprocessing is included as part of the model
+EfficientNet models expect their inputs to be float tensors of pixels with values in the [0-255] range.
