@@ -147,8 +147,8 @@ test_images, test_labels = Load_Data(
 **Note**: You can apply augmentation layers as preprocessing layers of the network. By default, augmentation layers are only applied during training.
 In Keras 3 the number of Augmentation Layers has been expanded. 
 For this project, we used three Augmentation layers 
-![Keras 2 API] (https://keras.io/2.15/api/layers/preprocessing_layers/image_augmentation)
-![Keras 3 API] (https://keras.io/api/layers/preprocessing_layers/image_augmentation)
+> [Keras 2 API] (https://keras.io/2.15/api/layers/preprocessing_layers/image_augmentation)
+> [Keras 3 API] (https://keras.io/api/layers/preprocessing_layers/image_augmentation)
 ```
 from keras import layers
 ```
