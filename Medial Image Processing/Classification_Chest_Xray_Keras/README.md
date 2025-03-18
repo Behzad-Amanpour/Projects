@@ -15,7 +15,7 @@ From the `Datasetes`, download `Chest X-Ray Images (Pneumonia)` dataset.
 ### Content of Images
 
 The dataset is organized into 3 folders (train, test, val) and contains subfolders for each image category (Pneumonia/Normal). There are 5,863 X-Ray images (JPEG) and 2 categories (Pneumonia/Normal).
-* **Note**: Delete the "**.DS_Store**" after unzipping.*
+**Note**: Delete the "**.DS_Store**" after unzipping.
 
 
  ## Mounting Drive on your Google Colab
@@ -23,7 +23,7 @@ The dataset is organized into 3 folders (train, test, val) and contains subfolde
 from google.colab import drive
 drive.mount('/content/drive')
 ```
-## Required Libraries:
+## Import Required Libraries
 ```
 import numpy as np
 from pandas import DataFrame
@@ -71,7 +71,7 @@ def plot_hist(hist):
 ## DATA LOADING
 **We changed this code of Keras for loadind JPEG format of data.**
 
-### Required Libraries
+### Import Required Libraries
 from keras.utils import load_img, img_to_array
 from tensorflow import one_hot
 from os import listdir
@@ -125,7 +125,7 @@ def Load_Data(path, IMG_SIZE):  # IMG_SIZE = 224  # Based on our networks exampl
 #### Train Data
 ```
 train_images, train_labels = Load_Data(
-                                      path, IMG_SIZE = 224)  #224 is based on our network input size and its examples on Keras
+                                      path, IMG_SIZE = 224)  #224 is based on our network input size and its examples on Keras.
 ```                                      
 > The output will be a sample of your train dataset:
 
@@ -143,4 +143,26 @@ test_images, test_labels = Load_Data(
                                       path, IMG_SIZE = 224)
 ```                                 
 
-
+## Data Augmentation
+**Note**: You can apply augmentation layers as preprocessing layers of the network. By default, augmentation layers are only applied during training.
+In Keras 3 the number of Augmentation Layers has been expanded. 
+For this project, we used three Augmentation layers 
+[Keras 2 API](https://keras.io/2.15/api/layers/preprocessing_layers/image_augmentation/)
+[Keras 3 API](https://keras.io/api/layers/preprocessing_layers/image_augmentation/)
+```
+from keras import layers
+```
+```
+Rot_layer = layers.RandomRotation(factor=0.05, fill_mode="constant")
+                                  # factor: a float represented as fraction of 2 Pi,    0.05 ≃ 20 degrees
+                                  # fill_mode="constant": filling all values beyond the edge with k = 0.
+Flip_layer = layers.RandomFlip(mode="horizontal")
+Contrast_layer = layers.RandomContrast(factor=0.2)
+                                  # The contrast_factor will be randomly picked between [1.0 - factor, 1.0 + factor]
+                                  # For any pixel x in the channel, the output will be ((x - mean) * contrast_factor + mean) where mean is the mean value of the channel.
+```
+### Concatenate the created augmentation layers with train_images and their labels
+```
+train_images_aug = np.concatenate((train_images, Rot_layer(train_images), Contrast_layer(train_images)), axis=0)
+train_labels_aug = np.concatenate((train_labels, train_labels, train_labels), axis=0)
+```
