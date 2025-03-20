@@ -1,5 +1,12 @@
-# **Classification_Chest_Xray_Keras**
+# **Chest_Xray using Deep Learning and Keras Library**
 ![photo](https://i.imgur.com/jZqpV51.png)
+
+This is an Educational Project for Graduates to practise the following tasks. 
+*I do not claim any innovation or outstanding performance.*
+
+1. Image Classification using Deep Learning and Keras Library.
+2. Loading grayscale images in JPEG forma, creating a dataset and generating corresponding lables.
+3. Handling Imbalanced dataset and improving model performance.
 
 **This is a project for diagnosis of pneumonia using chest X-ray images.**
 
