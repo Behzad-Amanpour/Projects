@@ -254,8 +254,14 @@ hist = model.fit(
 # Save Model
 model.save('/content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/saved_Models/EfficientNet.keras')
 ```
-- [InceptionV3] (https://keras.io/api/applications/)
 
-> - [InceptionV3] (https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/preprocess_input)
+**InceptionV3**
+> - (https://keras.io/api/applications/)
+>
+> call keras.applications.inception_v3.preprocess_input on your inputs before passing them to the model.
+> - (https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/preprocess_input)
+>   
+> Input: floating point numpy.array or a backend-native tensor, 3D or 4D with 3 color channels, with values in the range [0, 255].
 > 
-> FOR inception_v3, call keras.applications.inception_v3.preprocess_input on your inputs before passing them to the model.
+> The preprocessed data are written over the input data if the data types are compatible. To avoid this behaviour, numpy.copy(x) can be used.
+                                                                                          train_images2 = preprocess_input( np.copy(train_images) )
