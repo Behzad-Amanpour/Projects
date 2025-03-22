@@ -75,10 +75,12 @@ def plot_hist(hist):
 **We changed this code of Keras for loadind JPEG format of data.**
 
 ### Import Required Libraries
+```
 from keras.utils import load_img, img_to_array
 from tensorflow import one_hot
 from os import listdir
 from os.path import join
+```
 
 ### Define Function
 ```
@@ -234,7 +236,21 @@ optimizer = Adam(learning_rate=1e-2)
 model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=["accuracy"])
 ```
 
+## Train the Model
+```
+epochs = 50
+batch_size = 4
+hist = model.fit(
+                 x = train_images,  # train_images_aug,
+                 y = train_labels,  # train_labels_aug,
+                 batch_size = batch_size,
+                 epochs = epochs,
+                 # callbacks= my_callback,
+                 # validation_split=0.2,  # use this if you don't have validation data 
+                 validation_data=(valid_images, valid_labels),
+                 shuffle=True,
+                 )
 
-
-
-
+# Save Model
+model.save('/content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/saved_Models/EfficientNet.keras')
+```
