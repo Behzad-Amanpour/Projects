@@ -289,12 +289,14 @@ base_model.trainable = False
 ### Rebuild top
 ```
 Num_Classes = 2
+
 x = base_model.output
 x = GlobalAveragePooling2D()(x)
 x = Dense(1024, activation='relu')(x)
 outputs = Dense(Num_Classes, activation='softmax')(x)
 
 model2 = Model(inputs=base_model.input, outputs=outputs) # model.summary()
+
 # Compile Model
 model2.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=["accuracy"])
 ```
