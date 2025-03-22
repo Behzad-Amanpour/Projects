@@ -137,7 +137,7 @@ train_images, train_labels = Load_Data(path, IMG_SIZE = 224)
 #### Validation Data
 *If you have a separate validation data use this. But if not, you can use **`train_test_split`** for making validation dataset.*
 ```
-train_images, train_labels = Load_Data(path, IMG_SIZE = 224)
+valid_images, valid_labels = Load_Data(path, IMG_SIZE = 224)
 ```                                     
 #### Test Data
 ```
@@ -181,16 +181,17 @@ my_callback = [EarlyStopping(monitor='val_loss', patience = 10),
                ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=0.00001)]
 ```
 ## Model
-> We used Keras Model **`EfficientNetB0`** with weights pre-trained on imagenet.
+> We used Keras Models **`EfficientNetB0`** and **`InceptionV3`** with weights pre-trained on imagenet.
 >
-> EfficientNet provides a family of models (B0 to B7) that represents a good combination of efficiency and accuracy on a variety of scales.
->
-> [EfficientNet] (https://keras.io/examples/vision/image_classification_efficientnet_fine_tuning)
+- [EfficientNet] (https://keras.io/examples/vision/image_classification_efficientnet_fine_tuning)
+- [InceptionV3] (https://keras.io/api/applications/)
+
+> Each Keras model expects a specific kind of input preprocessing
+> - [EfficientNet] (https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/preprocess_input)
+> - [InceptionV3] (https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/preprocess_input)
 > 
-> Each Keras model expects a specific kind of input preprocessing (https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/preprocess_input)
-> 
-> For EfficientNet, input preprocessing is included as part of the model
-> 
+> For EfficientNet, input preprocessing is included as part of the model.
+> FOR inception_v3, call keras.applications.inception_v3.preprocess_input on your inputs before passing them to the model.
 > EfficientNet models expect their inputs to be float tensors of pixels with values in the [0-255] range.
 ### Check min and max values of our dataset
 ```
