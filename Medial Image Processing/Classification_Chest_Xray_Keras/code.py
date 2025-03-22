@@ -99,7 +99,7 @@ train_images, train_labels = Load_Data(
                                       path = '/content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/Train',
                                       IMG_SIZE = 224)  #224 is based on our network input size and its examples on Keras
 ## Validation Data (if you have a separate validation data)
-train_images, train_labels = Load_Data(
+valid_images, valid_labels = Load_Data(
                                       path = /content/drive/MyDrive/Projects/Classification_Chest_Xray_Keras/Validation,
                                       IMG_SIZE = 224)
 ## Test Data
