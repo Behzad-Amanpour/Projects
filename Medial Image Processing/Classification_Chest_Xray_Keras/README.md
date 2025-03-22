@@ -187,11 +187,13 @@ my_callback = [EarlyStopping(monitor='val_loss', patience = 10),
 > - (https://keras.io/examples/vision/image_classification_efficientnet_fine_tuning)
 >
 > Each Keras model expects a specific kind of input preprocessing.
+> 
 > For EfficientNet, input preprocessing is included as part of the model.
 > - (https://www.tensorflow.org/api_docs/python/tf/keras/applications/efficientnet/preprocess_input)
 > 
-> EfficientNet models expect their inputs to be float tensors of pixels with values in the [0-255] range.
+
 ### Check min and max values of our dataset
+> EfficientNet models expect their inputs to be float tensors of pixels with values in the [0-255] range.
 ```
 print(  'train images min max: ', train_images.min(), train_images.max(),
       '\nvalid images min max: ', valid_images.min(), valid_images.max(),
