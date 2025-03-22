@@ -17,6 +17,7 @@ The dataset is available in the following link as *"ChestXRay2017.zip"*:
 ### Content of Images
 
 The dataset is organized into 3 folders (train, test, val) and contains subfolders for each image category (Pneumonia/Normal). There are 5,863 X-Ray images (JPEG) and 2 categories (Pneumonia/Normal).
+
 **Note**: Delete the "**.DS_Store**" after unzipping.
 
 
