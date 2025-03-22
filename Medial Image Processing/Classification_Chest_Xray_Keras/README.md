@@ -5,18 +5,14 @@
 
 *(I do not claim any innovation or outstanding performance)*
 
-1. Image Classification using Deep Learning and Keras Library.
+1. Image classification using deep learning and Keras library.
 2. Loading grayscale images in JPEG forma, creating a dataset and generating corresponding lables.
-3. Handling Imbalanced dataset and improving model performance.
+3. Handling imbalanced dataset and improving model performance.
 
+## Dataset Information
+The dataset is available in the following link as *"ChestXRay2017.zip"*
+- (https://data.mendeley.com/datasets/rscbjbr9sj/2)
 
-- [Kaggle Source] (https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)
-- [Data] (https://data.mendeley.com/datasets/rscbjbr9sj/2)
-
-
-### For Downloding the Dataset From Kaggle
-
-From the `Datasetes`, download `Chest X-Ray Images (Pneumonia)` dataset.
 
 ### Content of Images
 
